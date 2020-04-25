@@ -1,0 +1,20 @@
+# common necessary apps
+sudo pacman -S vim man unzip zip screenfetch lsof bash-completion
+
+# common useful settings
+sudo pacman -S screenfetch bash-completion
+
+# necessary networking apps
+sudo pacman -S hping bind-tools wget curl openssh
+
+# coding related
+sudo pacman -S git code
+
+
+## git-flow, git-completion
+## .bashrc setup
+## .vimrc setup
+## gcc, cmake, cjson, cmocka
+## lua, python, pip,
+
+## git config user.name, user.email, commit-id-template
