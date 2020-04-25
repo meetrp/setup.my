@@ -1,0 +1,9 @@
+# Essential packages
+
+# bare minimum
+man
+vim
+bash-completion
+
+# UX
+screenfetch

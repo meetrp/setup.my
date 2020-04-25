@@ -1,0 +1,19 @@
+# Essential developer friendly apps
+git
+cmake
+## git-flow, git-completion
+
+# C specific
+gcc
+cmocka
+cjson
+
+# lua specific
+lua
+luarocks
+
+# python specific
+python-pip
+
+# vs code
+code

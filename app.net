@@ -1,0 +1,7 @@
+# Essential networking apps
+hping
+bind-tools
+wget
+curl
+openssh
+netstat
