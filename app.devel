@@ -1,19 +1,50 @@
+#!/bin/bash
+
+. ./log.fn
+. ./common.fn
+
 # Essential developer friendly apps
-git
-cmake
-## git-flow, git-completion
+DEV_ESSENTIALS=(
+	"git"
+	"cmake"
+	"git-flow"
+	"git-completion"
+	"code"
+)
 
 # C specific
-gcc
-cmocka
-cjson
+C_DEV=(
+	"gcc"
+	"cmocka"
+	"json-c"
+)
 
 # lua specific
-lua
-luarocks
+LUA_DEV=(
+	"lua"
+	"luarocks"
+)
 
 # python specific
-python-pip
+PY_DEV=(
+	"python-pip"
+)
 
-# vs code
-code
+# VSCode specific
+CODE_EXTENSIONS=(
+	"42Crunch.vscode-openapi"
+	"Arjun.swagger-viewer"
+	"eamodio.gitlens"
+	"mhutchie.git-graph"
+	"mohsen1.prettify-json"
+	"ms-azuretools.vscode-docker"
+	"ms-dotnettools.csharp"
+	"ms-mssql.mssql"
+	"ms-python.python"
+	"ms-vscode.cpptools"
+	"ms-vscode.Go"
+	"redhat.vscode-xml"
+	"redhat.vscode-yaml"
+	"ritwickdey.LiveServer"
+	"vector-of-bool.gitflow"
+)

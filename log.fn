@@ -1,0 +1,20 @@
+DBG_FILE="./install.log"
+
+function to_log() {
+	echo "$(date +'%F %X') [ ${BASH_SOURCE[2]}:${BASH_LINENO[1]} ] $@" >> $DBG_FILE
+}
+
+function dbg() {
+	to_log "(DEBUG)" $@
+}
+
+function info() {
+	echo "$(date +'[%F %X]') (INFO ) $@"
+	to_log "(INFO )" $@
+}
+
+function fatal() {
+	echo "$(date +'[%F %X]') (FATAL) $@" >&2
+	to_log "(FATAL)" $@
+	exit 1
+}

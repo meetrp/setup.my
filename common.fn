@@ -1,0 +1,30 @@
+. ./os.fn
+. ./log.fn
+
+function pkg_install() {
+	PKGS=${1}
+
+	for arr_of_arr in ${PKGS[@]}; do
+		arr=${arr_of_arr}[@]
+		for item in ${!arr}; do
+			info "Installing package: ${item}"
+			dbg ${PKG_MANAGER} ${item}
+			${PKG_MANAGER} ${item} 2> /dev/null >&2
+			[ $? -ne 0 ] && fatal "${item} installation failed!"
+		done
+	done
+}
+
+function vscode_extn_install() {
+	EXTNS=${1}
+
+	for arr_of_arr in ${EXTNS[@]}; do
+		arr=${arr_of_arr}[@]
+		for item in ${!arr}; do
+			info "Installing vscode extn: ${item}"
+			dbg ${CODE_MANAGER} ${item}
+			${CODE_MANAGER} ${item} 2> /dev/null >&2
+			[ $? -ne 0 ] && fatal "${item} installation failed!"
+		done
+	done
+}

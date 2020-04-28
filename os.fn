@@ -1,0 +1,11 @@
+# OS packages
+
+PKG_MANAGER_NAME="sudo pacman "
+PKG_MANAGER_OPTIONS="--color always --noconfirm --quiet --needed --noprogressbar "
+PKG_MANAGER_INSTALL="-S "
+PKG_MANAGER="${PKG_MANAGER_NAME} ${PKG_MANAGER_INSTALL} ${PKG_MANAGER_OPTIONS} "
+
+
+CODE_MANAGER_NAME="code "
+CODE_MANAGER_INSTALL="--install-extension"
+CODE_MANAGER="${CODE_MANAGER_NAME} ${CODE_MANAGER_INSTALL} "

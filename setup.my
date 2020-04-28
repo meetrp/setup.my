@@ -1,11 +1,36 @@
 #!/bin/bash
 
+. ./app.devel
+
+PKGS=(DEV_ESSENTIALS C_DEV LUA_DEV PY_DEV)
+info "Installing packages"
+pkg_install ${PKGS[@]}
+
+EXTNS=(CODE_EXTENSIONS)
+info "Installing vscode extensions"
+vscode_extn_install ${EXTNS[@]}
+
 ## .bashrc setup
 ## .vimrc setup
 ## git config user.name, user.email, commit-id-template
 
-APP_FILES=("app.essentials" "app.devel" "app.net")
-echo ${APP_FILES[@]}
-for app_file in ${APP_FILES[@]}; do
-	echo $app_file
+## KDE setup
+### sudo balooctl disable
+
+## vscode setup
+### code --install-extension
+
+
+#echo ${CODE_EXTENSIONS[@]}
+#code --install-extension ${CODE_EXTENSIONS[@]}
+for extn in ${CODE_EXTENSIONS[@]}; do
+	echo $extn
+	code --install-extension ${extn}
 done
+
+
+#APP_FILES=("app.essentials" "app.devel" "app.net")
+#echo ${APP_FILES[@]}
+#for app_file in ${APP_FILES[@]}; do
+	#echo $app_file
+#done
