@@ -1,10 +1,9 @@
-# Essential packages
+#!/bin/bash
 
-# bare minimum
-man
-vim
-bash-completion
-
-# UX
-screenfetch
-terminator
+SYS_ESSENTIALS=(
+	"man"
+	"vim"
+	"bash-completion"
+	"screenfetch"
+	"terminator"
+)

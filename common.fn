@@ -1,30 +1,99 @@
-. ./os.fn
+#!/bin/bash
+
+## DO NOT CHANGE THE ORDER
+. ./setup.env
 . ./log.fn
 
 function pkg_install() {
-	PKGS=${1}
+	local PKGS=${1}
 
+	inc_tab
 	for arr_of_arr in ${PKGS[@]}; do
 		arr=${arr_of_arr}[@]
 		for item in ${!arr}; do
-			info "Installing package: ${item}"
+			info "-> ${item}"
 			dbg ${PKG_MANAGER} ${item}
 			${PKG_MANAGER} ${item} 2> /dev/null >&2
-			[ $? -ne 0 ] && fatal "${item} installation failed!"
+			[ $? -ne 0 ] && fatal "${item} installation failed! \n ${PKG_MANAGER} ${item}"
 		done
 	done
+	dec_tab
 }
 
 function vscode_extn_install() {
-	EXTNS=${1}
+	local EXTNS=${1}
 
+	inc_tab
 	for arr_of_arr in ${EXTNS[@]}; do
 		arr=${arr_of_arr}[@]
 		for item in ${!arr}; do
-			info "Installing vscode extn: ${item}"
-			dbg ${CODE_MANAGER} ${item}
-			${CODE_MANAGER} ${item} 2> /dev/null >&2
-			[ $? -ne 0 ] && fatal "${item} installation failed!"
+			info "-> ${item}"
+			dbg ${VSCODE} ${item}
+			${VSCODE} ${item} 2> /dev/null >&2
+			[ $? -ne 0 ] && fatal "${item} installation failed! -- ${VSCODE} ${item}" 
 		done
 	done
+	dec_tab
+}
+
+function __fetch_directories() {
+	cd ${1}
+
+	local RET=""
+	for d in */; do
+		RET="$RET $d"
+	done
+
+	echo "${RET}"
+}
+
+function git_repo_install() {
+	local REPOS=${1}
+
+	for dir in $(__fetch_directories ${PERSONAL_SETUP_DIR}); do
+		dbg rm -rf ${PERSONAL_SETUP_DIR}/${dir}
+		rm -rf ${PERSONAL_SETUP_DIR}/${dir}
+	done
+
+	inc_tab
+	for arr_of_arr in ${REPOS[@]}; do
+		arr=${arr_of_arr}[@]
+		for item in ${!arr}; do
+			info "->  ${item}"
+			dbg ${GIT_CLONE} ${item}
+			${GIT_CLONE} ${item} 2> /dev/null >&2
+			[ $? -ne 0 ] && fatal "${item} cloning failed! -- ${GIT_CLONE} ${item}"
+		done
+	done
+
+	for dir in $(__fetch_directories ${PERSONAL_SETUP_DIR}); do
+		cd ${PERSONAL_SETUP_DIR}/${dir}
+		dbg ${MAKE_INSTALL} ${PERSONAL_SETUP_DIR}/${dir}
+		info "-> ${dir}"
+		${MAKE_INSTALL} 2> /dev/null >&2
+		[ $? -ne 0 ] && fatal "${dir} install failed! -- ${MAKE_INSTALL} ${PERSONAL_SETUP_DIR}/${dir}" 
+	done
+	dec_tab
+}
+
+function systemctl_activate() {
+	local SERVICES=${1}
+
+	inc_tab
+	for arr_of_arr in ${SERVICES[@]}; do
+		arr=${arr_of_arr}[@]
+		for item in ${!arr}; do
+			info "->  ${item}"
+			#info "Enabling systemctl service: ${item}"
+			dbg ${SYSTEMCTL_ENABLE} ${item}
+			${SYSTEMCTL_ENABLE} ${item} 2> /dev/null >&2
+			[ $? -ne 0 ] && fatal "${item} enable failed! -- ${SYSTEMCTL_ENABLE} ${item}"
+
+			#info "Starting systemctl service: ${item}"
+			dbg ${SYSTEMCTL_START} ${item}
+			${SYSTEMCTL_START} ${item} 2> /dev/null >&2
+			[ $? -ne 0 ] && fatal "${item} start failed! -- ${SYSTEMCTL_START} ${item}"
+		done
+	done
+	dec_tab
 }

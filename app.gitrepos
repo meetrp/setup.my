@@ -1,0 +1,9 @@
+#!/bin/bash
+
+GIT_REPOS_INSTALLS=(
+    "git://github.com/petervanderdoes/gitflow.git"
+)
+
+GIT_REPOS_COPY=(
+    "https://github.com/petervanderdoes/git-flow-completion.git"
+)

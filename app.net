@@ -1,7 +1,10 @@
-# Essential networking apps
-hping
-bind-tools
-wget
-curl
-openssh
-netstat
+#!/bin/bash
+
+NET_ESSENTIALS=(
+    "hping"
+    "bind-tools"
+    "wget"
+    "curl"
+    "openssh"
+    #"netstat"
+)

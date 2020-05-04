@@ -1,20 +1,43 @@
-DBG_FILE="./install.log"
+#!/bin/bash
+
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+INDENT_VALUE=0
+
+function inc_tab() {
+	INDENT_VALUE=$((INDENT_VALUE+2))
+}
+function dec_tab() {
+	INDENT_VALUE=$((INDENT_VALUE-2))
+}
 
 function to_log() {
-	echo "$(date +'%F %X') [ ${BASH_SOURCE[2]}:${BASH_LINENO[1]} ] $@" >> $DBG_FILE
+	echo -e "$(date +'%F %X') [ ${BASH_SOURCE[2]}:${BASH_LINENO[1]} ] $@" >> $DBG_FILE
 }
 
 function dbg() {
-	to_log "(DEBUG)" $@
+	to_log "(DBG)" $@
+}
+
+function __add_tab() {
+	if [ ${INDENT_VALUE} -ne 0 ]; then
+		for i in {0..${INDENT_VALUE}}; do echo "\t"; done
+	else
+		echo ""
+	fi
 }
 
 function info() {
-	echo "$(date +'[%F %X]') (INFO ) $@"
-	to_log "(INFO )" $@
+	local DATA="$(__add_tab)$@"
+
+	echo -e "$(date +'[%F %X]') ${BLUE}(INF)${NC} ${DATA}"
+	to_log "(INFO )" ${DATA}
 }
 
 function fatal() {
-	echo "$(date +'[%F %X]') (FATAL) $@" >&2
+	echo -e "\033[0;31m$(date +'[%F %X]') ${RED}(FTL)${NC} $@" >&2
 	to_log "(FATAL)" $@
 	exit 1
 }

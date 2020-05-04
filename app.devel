@@ -1,14 +1,11 @@
 #!/bin/bash
 
-. ./log.fn
-. ./common.fn
-
 # Essential developer friendly apps
 DEV_ESSENTIALS=(
 	"git"
 	"cmake"
-	"git-flow"
-	"git-completion"
+	#"git-flow"
+	#"git-completion"
 	"code"
 )
 
