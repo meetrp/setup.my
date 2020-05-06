@@ -5,5 +5,5 @@ GIT_REPOS_INSTALLS=(
 )
 
 GIT_REPOS_COPY=(
-    "https://github.com/petervanderdoes/git-flow-completion.git"
+    "git-flow-completion.bash","https://github.com/petervanderdoes/git-flow-completion.git","${COMPLETION_PATH}"
 )

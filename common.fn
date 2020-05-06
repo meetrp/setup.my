@@ -76,6 +76,31 @@ function git_repo_install() {
 	dec_tab
 }
 
+function git_repo_copy() {
+	local REPOS=${1}
+
+	inc_tab
+	for arr_of_arr in ${REPOS[@]}; do
+		arr=${arr_of_arr}[@]
+		for item in ${!arr}; do
+			local _FILE=$(echo ${item} | cut -d',' -f1)
+			local _REPO=$(echo ${item} | cut -d',' -f2)
+			local _PATH=$(echo ${item} | cut -d',' -f3)
+			info "-> ${_FILE} ${_REPO} ${_PATH}"
+
+			dbg ${GIT_CLONE} ${_REPO} ${_FILE}
+			info ${GIT_CLONE} ${_REPO} ${_FILE}
+			${GIT_CLONE} ${_REPO} ${_FILE} 2> /dev/null >&2
+			[ $? -ne 0 ] && fatal "${_REPO} cloning failed! -- ${GIT_CLONE} ${_REPO} ${_FILE}"
+
+			dbg cp ${PERSONAL_SETUP_DIR}/${_FILE}/${_FILE} ${_PATH}
+			info cp ${PERSONAL_SETUP_DIR}/${_FILE}/${_FILE} ${_PATH}
+			sudo cp ${PERSONAL_SETUP_DIR}/${_FILE}/${_FILE} ${_PATH}
+		done
+	done
+	dec_tab
+}
+
 function systemctl_activate() {
 	local SERVICES=${1}
 
