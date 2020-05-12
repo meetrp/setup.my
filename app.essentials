@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SYS_ESSENTIALS=(
+	"man"
+	"vim"
+	"bash-completion"
+	"screenfetch"
+	"terminator"
+)

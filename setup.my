@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# import common functions
+. ./common.fn
+
+# import variables
+. ./app.essentials
+. ./app.devel
+. ./app.net
+. ./app.gitrepos
+. ./app.systemctl
+
+function install_devel_essentials() {
+	local PKGS=(DEV_ESSENTIALS C_DEV LUA_DEV PY_DEV)
+	info "Installing dev packages"
+	pkg_install ${PKGS[@]}
+
+	local EXTNS=(CODE_EXTENSIONS)
+	info "Installing vscode extensions"
+	vscode_extn_install ${EXTNS[@]}
+}
+
+function install_essentials() {
+	local PKGS=(SYS_ESSENTIALS)
+	info "Installating system packages"
+
+	inc_tab
+	pkg_install ${PKGS[@]}
+	dec_tab
+}
+
+function install_network_essentials() {
+	local PKGS=(NET_ESSENTIALS)
+	info "Installating network packages"
+	pkg_install ${PKGS[@]}
+}
+
+function install_from_git_repo() {
+	local PKGS=(GIT_REPOS_INSTALLS)
+	info "Installating git repo packages"
+	git_repo_install ${PKGS[@]}
+}
+
+function copy_from_git_repo() {
+	local PKGS=(GIT_REPOS_COPY)
+	info "Copying git repo packages"
+	git_repo_copy ${PKGS[@]}
+}
+
+function setup_systemctl_services() {
+	local PKGS=(SYSTEMCTL_SERVICES)
+	info "Activating systemctl services"
+	systemctl_activate ${PKGS[@]}
+}
+
+function home_setup() {
+	info "Setting up home"
+	dbg mkdir -p ${PERSONAL_DEV_DIR}
+	mkdir -p ${PERSONAL_DEV_DIR}
+}
+
+function setup_temporary() {
+	dbg mkdir -p ${PERSONAL_SETUP_DIR}
+	mkdir -p ${PERSONAL_SETUP_DIR}
+}
+
+function cleanup_temporary() {
+	dbg rm -rf ${PERSONAL_SETUP_DIR}
+	rm -rf ${PERSONAL_SETUP_DIR}
+}
+
+dbg "Setting up the ${ARCH} system"
+info "Setting up the ${ARCH} system"
+setup_temporary
+home_setup
+install_essentials
+install_network_essentials
+install_devel_essentials
+install_from_git_repo
+copy_from_git_repo
+setup_systemctl_services
+cleanup_temporary
+info "Done setup of ${ARCH} system"
+dbg "Dsone setup of ${ARCH} system"
+
+
+## .bashrc setup
+## .vimrc setup
+## git config user.name, user.email, commit-id-template
+
+## KDE setup
+### sudo balooctl disable
+
+## vscode setup
+### code --install-extension
